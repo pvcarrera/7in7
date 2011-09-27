@@ -18,3 +18,15 @@ while i < 11
 	puts "This is sentence number #{i}"
 	i = i + 1
 end
+
+#Bonus problem
+number = rand(10)
+playerNumber = 0
+while playerNumber != number
+	puts 'Introduce un número entre 0 y 9'
+	playerNumber = gets.to_i
+	puts 'El número es mayor' if playerNumber < number
+	puts 'El número es menor' if playerNumber > number
+end
+puts "You win!!"
+
