@@ -22,3 +22,24 @@ hash.each do |k,v|
 	puts "Clave = #{k}"
 	puts "Valor = #{v}"
 end
+
+#Print the contents of an array of sixtenn numbers, four numbers at time, using just each
+a = (0..16).to_a
+string = ''
+count = 1;
+a.each do |i|
+	string = string + i.to_s
+	if count == 4
+		puts string
+		count = 0;
+		string = '';
+	end
+	count = count + 1
+end
+
+#Print the contents of an array of sixtenn numbers, four numbers at time, using just each (slice)
+
+a = (0..16).to_a
+a.each_slice(4) do |four|
+	puts four
+end
