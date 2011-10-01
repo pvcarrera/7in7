@@ -43,3 +43,47 @@ a = (0..16).to_a
 a.each_slice(4) do |four|
 	puts four
 end
+
+# The Tree class was interesting, but it did not allow you to specify
+#  a new tree with a clean user interface. Let the initializer accept a
+#  nested structure of hashes. You should be able to specify a tree
+#  like this: {'grandpa' => { 'dad' => {'child 1' => {}, 'child 2' => {} }, 'uncle'
+#  => {'child 3' => {}, 'child 4' => {} } } }.
+
+class Tree 
+	attr_accessor :children, :node_name
+
+	def initialize(tree)
+		@node_name = tree.to_a[0][0]
+		@children = []
+		tree[@node_name].each do |k, v|
+			@children.push Tree.new(k => v)
+		end
+	end
+
+	def visit_all(&block)
+		    visit &block
+		    children.each {|c| c.visit_all &block}
+	end
+      
+	def visit(&block)
+		    block.call self
+	end
+end
+
+tree = Tree.new 'grandpa' => {'dad' => {'child 1' => {}, 'child 2' => {}}, 'uncle' => {'child 3' => {}, 'child 4' => {} }}
+
+tree.visit_all {|node| puts node.node_name}
+
+# Write a simple grep that will print the lines of a file having any
+# occurrences of a phrase anywhere in that line. You will need to do
+# a simple regular expression match and read lines from a file. (This
+# is surprisingly simple in Ruby.) If you want, include line numbers.
+
+lines = File.open('regularExpression.txt').readlines
+pattern = "pablo"
+lineNumber = 0
+lines.each do |line|
+	puts "#{lineNumber} #{line}" if line.include?(pattern)
+	lineNumber +=1
+end
